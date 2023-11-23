@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mb-3 pb-3">
+  <div class="row justify-content-center align-items-center">
+    <div class="col-sm-10 col-md-8 col-lg-6">
+      <h1 class="aside-near text-center mb-3 mt-3">
+        Mon compte
+      </h1>
+      <div class="card card-account aside-near">
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title text-center">Modifier vos informations {{ user.first_name }}</h5>
+        </div>
+        <ul class="list-group list-group-flush" style="margin-left: 5px; margin-right: 5px;">
+          <form method="post">
+            {% csrf_token %}
+            <p>
+              Nouveau pseudo :<br>
+              <input type="text" name="pseudo" class="mb-2" style="width: 100%;">
+              <!-- Ajoutez le code suivant pour afficher un message d'erreur -->
+              {% if error %}
+                <p class="text-danger">{{ error }}</p>
+              {% endif %}
+            </p>
+            <p>
+              Nouveau prénom :<br>
+              <input type="text" name="first_name" class="mb-2" style="width: 100%;"> 
+            </p>
+            <p>
+              Nouveau nom :<br>
+              <input type="text" name="last_name" class="mb-2" style="width: 100%;">
+            </p>
+            <p>
+              Nouveau mail :<br>
+              <input type="email" placeholder="xyz@exemple.com" name="email" class="mb-2" style="width: 100%;"> 
+            </p>
+            <button type="submit" class="btn btn-primary1 mb-2" style="width: 100%;" name="login">Modifier</button>
+          </form>
+          <a href="{% url 'my-account' %}" class="btn btn-danger mb-2" style="width: 100%;">Retour</a>
+        </ul>
+      </div>    
+    </div>
+  </div>
+</div>
+{% endblock %}

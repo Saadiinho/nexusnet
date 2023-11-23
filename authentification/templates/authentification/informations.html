@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mb-3 pb-3">
+  <div class="row justify-content-center align-items-center">
+    <div class="col-sm-10 col-md-8 col-lg-6">
+      <h1 class="aside-near text-center mb-3 mt-3">
+        Mon compte
+      </h1>
+      <div class="card card-account aside-near">
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title text-center">Vos informations {{ user.username }}</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            <p>Pseudo : {{ user.username }}</p>
+          </li>
+          <li class="list-group-item">
+            <p>Nom : {{ user.last_name }}</p>
+          </li>
+          <li class="list-group-item">
+            <p>Prénom : {{ user.first_name }}</p>
+          </li>
+          <li class="list-group-item">
+            <p>Adresse mail : {{ user.email }}</p>
+          </li>
+          <li class="list-group-item">
+            <a href="{% url 'my-account' %}" class="btn btn-danger" style="width: 100%;">Retour</a>
+          </li>
+        </ul>
+      </div>    
+    </div>
+  </div>
+</div>
+{% endblock %}

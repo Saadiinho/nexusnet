@@ -1,0 +1,8 @@
+{% block content %}
+<h1>Suppression de la publication</h1>
+<p>Voulez-vous supprimer votre publication ?</p>
+<form action="" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Supprimer">
+</form>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<p>
+    {% for publication in publications %}
+        {{ publication.message }} <br>
+        {{ publication.date }} <br>
+        <a href="{% url 'publicationUpdate' publication.id %}">Modifier la publication</a> <br>
+        <a href="{% url 'publicationDelete' publication.id %}">Supprimer la publication</a> <br>
+    {% endfor %}
+</p>
+<a href="{% url 'writePublication' %}">Ecrire une publication</a>
+{% endblock %}

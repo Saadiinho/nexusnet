@@ -1,0 +1,14 @@
+{% block content %}
+<p>
+    {{ publication.message }} <br>
+    {{ publication.date }} <br>
+    {{ publication.author.username }} <br>
+    {% if publication.isPrivate %}
+        Privé
+    {% else %}
+        Public
+    {% endif %} <br>
+    <a href="{% url 'home' %}">Retour</a>
+</p>
+
+{% endblock %}
