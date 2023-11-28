@@ -1,2 +1,3 @@
-# Platforme-Evaluation-Jeu
-Le principe ressemble au projet en java sauf que la, c'est sous la forme d'une application web
+# PNexusNet
+**Le projet n'est pas encore terminé**
+Création d'un réseau social ressemblant à INstagram et X (twitter)
