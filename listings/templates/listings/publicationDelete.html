@@ -1,8 +1,13 @@
+{% extends 'base.html' %}
+
 {% block content %}
-<h1>Suppression de la publication</h1>
-<p>Voulez-vous supprimer votre publication ?</p>
-<form action="" method="post">
-    {% csrf_token %}
-    <input type="submit" value="Supprimer">
-</form>
+
+    <div class="d-flex justify-content-center align-items-center" style="height: 100vh; margin-left: 5px;">
+        <form method="post" class="m-3">
+            {% csrf_token %}
+            <h1>Êtes-vous sûr de vouloir supprimer votre publication</h1> <br>
+            <input type="submit" value="Supprimer" class="btn btn-outline-danger"></button>
+            <a href="{% url 'home' %}" class="btn btn-primary1">Retour</a>
+        </form>
+    </div>
 {% endblock %}

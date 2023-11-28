@@ -110,9 +110,8 @@
     <aside class="Test">
       <a class="link" href="{% url 'home' %}">Accueil</a>
       <a class="link" href="{% url 'writePublication' %}">Publier</a>
-      <a class="link" href="">Mes amis</a>
+      <a class="link" href="{% url 'friend' %}">Amis</a>
       <a class="link" href="{% url 'my-account' %}">Mon compte</a>
-      <a class="link" href="{% url 'logout' %}">Déconnexion</a>
     </aside>
     {% block content %}
     {% endblock %}

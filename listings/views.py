@@ -22,16 +22,17 @@ def publicationDetail(request, id):
 @login_required
 def writePublication(request):
     if request.method == 'POST':
-        form = writePublicationForm(request.POST, request.FILES)
-        if form.is_valid():
-            message = form.cleaned_data['message']
-            date = timezone.now()
-            picture = form.cleaned_data['picture']
-            author = request.user
-            is_private = form.cleaned_data['isPrivate']
-            publication = Publication.objects.create(message=message, date=date, picture=picture, author=author, isPrivate=is_private)
-            publication.save()
-            return redirect('publicationCreated')
+        message = request.POST.get('publication')
+        image = request.POST.get('imageUpload')
+        private = request.POST.get('private')
+        isPrivate = False
+        if private == 'on':
+            isPrivate = True
+        date = timezone.now()
+        author = request.user
+        publication = Publication.objects.create(message=message, date=date, picture=image, author=author, isPrivate=isPrivate)
+        publication.save()
+        return redirect('home')
     else:
         form = writePublicationForm()
     return render(request, 'listings/writePublication.html', {'form': form})
@@ -41,14 +42,17 @@ def publicationCreated(request):
 @login_required
 def publicationUpdate(request, id):
     publication = Publication.objects.get(id=id)
-
     if request.method == 'POST':
-        form = writePublicationForm(request.POST)
-        if form.is_valid():
-            publication.message = form.cleaned_data['message']
-            publication.date = timezone.now()
-            publication.save()
-            return redirect("publicationDetail", publication.id)
+        publication.message = request.POST.get('publication')
+        publication.picture = request.POST.get('imageUpload')
+        private = request.POST.get('private')
+        isPrivate = False
+        if private == 'on':
+            isPrivate = True
+            publication.isPrivate = isPrivate
+        publication.date = timezone.now()
+        publication.save()
+        return redirect("publicationDetail", publication.id)
     else: 
         form = writePublicationForm()
     return render(request, 'listings/publicationUpdate.html', {'form': form})
