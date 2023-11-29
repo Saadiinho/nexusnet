@@ -147,14 +147,50 @@ def search_friends(request):
                     return render(request, 'authentification/search_friend.html', {'user': user, 'search': search, 'newFriend': newFriend})
     return render(request, 'authentification/search_friend.html', {'search': search, 'user': user})
 
+
+def presence(request, id):
+    list_friends = Friend.objects.all()
+    User = get_user_model()
+    user = request.user
+    friend = User.objects.get(id=id)
+    for list_friend in list_friends:
+        if list_friend.user == user:
+            if list_friend.friend == friend:
+                presence = True
+        elif list_friend.friend == user:
+            if list_friend.user == friend:
+                presence = True
+
+    return presence
+
+
 def account_user(request, id):
+    list_friends = Friend.objects.all()
     User = get_user_model()
     friend = User.objects.get(id=id)
     publications = Publication.objects.filter(author=friend)
     user = request.user
+    presence = False
+
+    for list_friend in list_friends:
+        # Vérification des deux sens de l'amitié
+        if (list_friend.user == user and list_friend.friend == friend) or (list_friend.user == friend and list_friend.friend == user):
+            presence = True
+            break 
     if request.method == 'POST':
         if 'add' in request.POST:
-            newFriend = Friend.objects.create(user=user, friend=friend)
-            newFriend.save()
-            return redirect('friend')
-    return render(request, 'authentification/account_user.html', {'friend': friend, 'user': user, 'publications': publications})
+            if not presence:
+                newFriend = Friend.objects.create(user=user, friend=friend)
+                newFriend.save()
+                return redirect('friend')
+            else :
+                return render(request, 'authentification/account_user.html', {'friend': friend, 'user': user, 'publications': publications, 'presence': presence})
+        elif 'delete' in request.POST:
+            for list_friend in list_friends:
+                if (list_friend.friend == friend and list_friend.user == user) or (list_friend.friend == user and list_friend.user == friend):
+                    list_friend.delete()
+                    return redirect('friend')
+    return render(request, 'authentification/account_user.html', {'friend': friend, 'user': user, 'publications': publications, 'presence': presence})
+ 
+def suggestion(request):
+    return render(request, 'authentification/suggestion.html')

@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mb-3 pb-3">
+<div class="mb-3 pb-3">
     <div class="row justify-content-center align-items-center">
         <div class="col-sm-10 col-md-8 col-lg-6">
             <h1 class="aside-near text-center mb-3 mt-3">
             Amis
             </h1>
-            <nav class="aside-near navbar navbar-expand-lg">
+            <div class="aside-near navbar navbar-expand-lg">
                 <div class="container-fluid">
                     <div class="collapse navbar-collapse" id="navbarText">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -18,12 +18,12 @@
                                 <a class="nav-link active" aria-current="page" href="{% url 'searchFriend' %}">Rechercher des personnes</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Pricing</a>
+                                <a class="nav-link" href="#">Suggestions</a>
                             </li>
                         </ul>
                     </div>
                 </div>
-            </nav>    
+            </div>    
             <div class="aside-near">
                 <form method="post">
                     {% csrf_token %}

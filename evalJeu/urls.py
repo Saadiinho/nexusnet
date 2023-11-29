@@ -35,7 +35,7 @@ urlpatterns = [
     path('friends/', authentification.views.friends, name='friend'),
     path('search-friends/', authentification.views.search_friends, name='searchFriend'),
     path('account-user/<int:id>', authentification.views.account_user, name="accountUser"),
-    #path('friends/', authentification.views.friends, name='friend'),
+    path('suggestion/', authentification.views.suggestion, name='suggestion'),
     #path('friends/', authentification.views.friends, name='friend'),
 
 

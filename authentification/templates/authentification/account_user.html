@@ -26,7 +26,17 @@
                     <li class="list-group-item">
                         <form method="POST">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-primary1" style="width: 100%;" name="add">Ajouter</button>
+                            {% if presence %}
+                                <p class="text-danger">{{ friend.username }} fait parti de vos amis.</p>
+                            {% endif %}
+                            
+                            {% if not presence %}
+                                <button type="submit" class="btn btn-primary1" style="width: 100%;" name="add">Ajouter</button>
+                            {% endif %}
+
+                            {% if presence %}
+                                <button type="submit" class="btn btn-primary1" style="width: 100%;" name="delete">Supprimer</button>
+                            {% endif %}
                         </form>
                     </li>
                     <li class="list-group-item">
