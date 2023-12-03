@@ -28,27 +28,17 @@ def delete_account(request):
 def display_informations(request):
     return render(request, 'authentification/informations.html')
 
-def login_page(request):
-    form = forms.LoginForm()
-    error = False
-    message = ''
-    if request.method == 'POST' and 'login' in request.POST:
-        form = forms.LoginForm(request.POST)
-        if form.is_valid():
-            user = authenticate(username =form.cleaned_data['username'], password=form.cleaned_data['password'])
-            if user is not None:
-                login(request, user)
-                return redirect('my-account')
-            else :
-                error = True
-                message = 'Identifiants invalides'
-    return render(request, 'authentification/login.html', {'form': form, 'message' : message, 'error': error})
+
 
 def signup_page(request):
     User = get_user_model()
-
+    user_connected = request.user
+    if user_connected : 
+        logout(request)
     if request.method == 'POST':
         pseudo = request.POST.get('pseudo')
+        pseudo = str(pseudo)
+        pseudo = pseudo.lower()
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         email = request.POST.get('email')
@@ -68,6 +58,9 @@ def signup_page(request):
             user.email = email
             user.set_password(password1)
             user.save()
+            admin = User.objects.get(username='admin')
+            friend = Friend.objects.create(user=user, friend=admin)
+            friend.save()
         login(request, user)
         return redirect(settings.LOGIN_REDIRECT_URL)
     return render(request, 'authentification/signup.html')
@@ -79,9 +72,12 @@ def update_informations(request):
     user = request.user
     if request.method == 'POST':
         pseudo = request.POST.get('pseudo')
+        pseudo = str(pseudo)
+        pseudo = pseudo.lower()
         firstName = request.POST.get('first_name')
         lastName = request.POST.get('last_name')
         email = request.POST.get('email')
+        photo = request.FILES.get('profile_photo')
         if pseudo:
             if User.objects.filter(username=pseudo).exists():
                 # Le pseudo est déjà pris
@@ -94,6 +90,8 @@ def update_informations(request):
             user.last_name = lastName
         if email : 
             user.email = email
+        if photo:
+            user.profile_photo = photo
         user.save()
         return redirect('informations')
     return render(request, 'authentification/update_informations.html')
@@ -103,7 +101,6 @@ def change_password(request):
     error = False
     message = ''
     if request.method == 'POST':
-        print("test")
         if request.method == 'POST':
             old_password = request.POST.get('old_password')
             new_password1 = request.POST.get('new_password1')
@@ -123,38 +120,106 @@ def change_password(request):
                 return redirect('my-account')
     return render(request, 'authentification/change_password.html', {'error': error, "message": message})
 
+
+def login_page(request):
+    user = request.user
+    if user : 
+        logout(request)
+    error = False
+    message = ''
+    if request.method == 'POST' and 'login' in request.POST:
+        username = request.POST.get('pseudo')
+        username = str(username)
+        username = username.lower()
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('my-account')
+        else :
+            error = True
+            message = 'Identifiants invalides'
+    return render(request, 'authentification/login.html', {'message' : message, 'error': error})
+
+
 @login_required
 def friends(request):
     friends = Friend.objects.all()
     user = request.user
-    return render(request, 'authentification/my_friend.html', {'friends': friends, 'user': user})
+    count = count_friend(request)
+    return render(request, 'authentification/my_friend.html', {'friends': friends, 'user': user, 'count': count})
 
 @login_required
 def search_friends(request):
     search = False
     user = request.user
     User = get_user_model()
+    count = count_friend(request)
     if request.method == 'POST':
         if 'search' in request.POST:
             pseudo = request.POST.get('pseudo')
             if pseudo:
                 if not User.objects.filter(username=pseudo).exists():
-                    # Le pseudo est déjà pris
-                    return render(request, 'authentification/search_friend.html', {'user': user, 'search': search, 'error': "Cette utilisateur n'existe pas"})
+                    return render(request, 'authentification/search_friend.html', {'user': user, 'search': search, 'error': "Cette utilisateur n'existe pas", 'count': count})
                 else:
                     search = True
                     newFriend = User.objects.get(username=pseudo)
-                    return render(request, 'authentification/search_friend.html', {'user': user, 'search': search, 'newFriend': newFriend})
-    return render(request, 'authentification/search_friend.html', {'search': search, 'user': user})
+                    return render(request, 'authentification/search_friend.html', {'user': user, 'search': search, 'newFriend': newFriend, 'count': count})
+    return render(request, 'authentification/search_friend.html', {'search': search, 'user': user, 'count': count})
+
+
+def count_friend(request):
+    friends = Friend.objects.all()
+    user = request.user
+    count = 0
+    for friend in friends:
+        if friend.user == user or friend.friend == user:
+            count +=1
+    return count
+
+def presence(request, id):
+    list_friends = Friend.objects.all()
+    User = get_user_model()
+    user = request.user
+    friend = User.objects.get(id=id)
+    for list_friend in list_friends:
+        if list_friend.user == user:
+            if list_friend.friend == friend:
+                presence = True
+        elif list_friend.friend == user:
+            if list_friend.user == friend:
+                presence = True
+    return presence
+
 
 def account_user(request, id):
+    list_friends = Friend.objects.all()
     User = get_user_model()
     friend = User.objects.get(id=id)
     publications = Publication.objects.filter(author=friend)
     user = request.user
+    presence = False
+    count = count_friend(request)
+    for list_friend in list_friends:
+        # Vérification des deux sens de l'amitié
+        if (list_friend.user == user and list_friend.friend == friend) or (list_friend.user == friend and list_friend.friend == user):
+            presence = True
+            break 
     if request.method == 'POST':
         if 'add' in request.POST:
-            newFriend = Friend.objects.create(user=user, friend=friend)
-            newFriend.save()
-            return redirect('friend')
-    return render(request, 'authentification/account_user.html', {'friend': friend, 'user': user, 'publications': publications})
+            if not presence:
+                newFriend = Friend.objects.create(user=user, friend=friend)
+                newFriend.save()
+                return redirect('friend')
+            else :
+                return render(request, 'authentification/account_user.html', {'friend': friend, 'user': user, 'publications': publications, 'presence': presence, 'count': count})
+        elif 'delete' in request.POST:
+            for list_friend in list_friends:
+                if (list_friend.friend == friend and list_friend.user == user) or (list_friend.friend == user and list_friend.user == friend):
+                    list_friend.delete()
+                    return redirect('friend')
+    return render(request, 'authentification/account_user.html', {'friend': friend, 'user': user, 'publications': publications, 'presence': presence, 'count': count})
+ 
+def suggestion(request):
+    count = count_friend(request)
+    return render(request, 'authentification/suggestion.html', {'count': count})
