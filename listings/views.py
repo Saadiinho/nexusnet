@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-
+from authentification.views import presence
 from listings.models import Publication
 from listings.forms import *
 
@@ -22,20 +22,22 @@ def publicationDetail(request, id):
 @login_required
 def writePublication(request):
     if request.method == 'POST':
-        message = request.POST.get('publication')
-        image = request.POST.get('imageUpload')
-        private = request.POST.get('private')
-        isPrivate = False
-        if private == 'on':
-            isPrivate = True
-        date = timezone.now()
-        author = request.user
-        publication = Publication.objects.create(message=message, date=date, picture=image, author=author, isPrivate=isPrivate)
-        publication.save()
-        return redirect('home')
-    else:
-        form = writePublicationForm()
-    return render(request, 'listings/writePublication.html', {'form': form})
+        print('test')
+        message = request.POST.get('message')
+        image = request.FILES.get('image')
+        if message or image:
+            private = request.POST.get('isPrivate')
+            isPrivate = False
+            if private == 'on':
+                isPrivate = True
+            date = timezone.now() 
+            author = request.user
+            publication = Publication.objects.create(message=message, date=date, picture=image, author=author, isPrivate=isPrivate)
+            publication.save()
+            return redirect('home')
+    return render(request, 'listings/writePublication.html', {'error': ''})
+
+
 @login_required
 def publicationCreated(request):
     return render(request, 'listings/publicationCreated.html')
