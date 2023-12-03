@@ -1,3 +1,2 @@
-# NexusNet
-**Le projet n'est pas encore terminé** <br>
-Création d'un réseau social ressemblant à Instagram et X (twitter)
+# Platforme-Evaluation-Jeu
+Le principe ressemble au projet en java sauf que la, c'est sous la forme d'une application web
