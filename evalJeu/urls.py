@@ -35,7 +35,7 @@ urlpatterns = [
     path('friends/', authentification.views.friends, name='friend'),
     path('search-friends/', authentification.views.search_friends, name='searchFriend'),
     path('account-user/<int:id>', authentification.views.account_user, name="accountUser"),
-    #path('friends/', authentification.views.friends, name='friend'),
+    path('suggestion/', authentification.views.suggestion, name='suggestion'),
     #path('friends/', authentification.views.friends, name='friend'),
 
 
@@ -46,4 +46,7 @@ urlpatterns = [
     path('publication-update/<int:id>/', listings.views.publicationUpdate, name='publicationUpdate'),
     path('publication-delete/<int:id>/', listings.views.publicationDelete, name='publicationDelete'),
     path('my-publications/', listings.views.myPublication, name='myPublications'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] 
+
+if settings.DEBUG:
+    urlpatterns +=  static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
