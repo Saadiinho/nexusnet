@@ -1,2 +1,2 @@
-# Platforme-Evaluation-Jeu
-Le principe ressemble au projet en java sauf que la, c'est sous la forme d'une application web
+# NexusNet
+Un nouveau réseau social. Dans ce réseau, les utilisateurs peuvent poster des photos, des messages, ajouter des amis et discuter en privé avec leurs amis !
