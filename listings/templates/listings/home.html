@@ -1,45 +1,53 @@
 {% extends 'base.html' %}
 {% block content %}
+<div class="container">
+
+    <div class="row justify-content-center align-items-center">
+      <div class="col-sm-10 col-md-8 col-lg-6">
+        <h1 class="text-center mb-3 mt-3">
+          Fil d'actualité
+        </h1>    
+      </div>
+    </div>
+    {% if present %}
+        <div class="container-fluid d-flex justify-content-center align-items-center">
+            <div class="row justify-content-center align-items-center" style="width: 50%;">
+                {% for publication in publications reversed %}
+                <div class="col-xs-12 col-sm-10 col-md-6 col-lg-12 mb-5">
+                    <div class="card">
+                        <div class="card-header fs-4">  
+                            <img src="{{ publication.author.profile_photo.url }}" alt="Photo de profil" width="32" height="32" class="rounded-circle border border-white">
+                            <strong>
+                                <a href="{% url 'accountUser' publication.author.id %}" class="text-primary1">{{ publication.author.username }}</a>
+                            </strong>
+                        </div>
+                        {% if publication.picture %}
+                            <img src="{{ publication.picture.url }}" class="card-img-top img-fluid w-100" alt="Image" style="height: 200px; object-fit: cover;">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5>
+                                {{ publication.message }}
+                            </h5>
+                            {{ publication.date }} <br>
+                            {% if publication.author == user %}
+                            <a href="{% url 'publicationUpdate' publication.id %}" style="text-decoration: none;">
+                                <img src="/media/images/crayon.png" alt="Modifier" width="32" height="32" class="rounded-circle border border-white">
+                            </a>
+                            <a href="{% url 'publicationDelete' publication.id %}" style="text-decoration: none;">
+                                <img src="/media/images/supprimer.png" alt="Modifier" width="32" height="32" class="rounded-circle border border-white">
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+</div>
+
 <a class="child" href="{% url 'writePublication' %}">
     Publier
 </a>
-<h2 class="text-center mt-3 aside-near">Fil d'actualité</h2>
-{% if present %}
-    <div class="container mb-2 mt-2 pt-2 pb-4">
-        {% for publication in publications reversed %}
-            <div class="card mb-3 aside-near">
-                <div class="card-header fs-4">  
-                    <strong>{{ publication.author.username }}</strong>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        {% if publication.picture %}
-                            <div class="col-12">
-                                <img src="{{ publication.picture.url }}" alt="" class="img-fluid"> <br>
-                            </div>
-                            <div class="col-12">
-                                {{ publication.message }}
-                            </div>
-                        {% else %}
-                        <p class="card-text">
-                            {{ publication.message }}
-                        </p>
-                        {% endif %}
-                    </div>
-                    {% if publication.author == user %}
-                        <a href="{% url 'publicationUpdate' publication.id %}" class="btn btn-primary1">Modifier</a>
-                        <a href="{% url 'publicationDelete' publication.id %}" class="btn btn-danger">Supprimer</a>
-                    {% endif %}
-                </div>
-                <div class="card-footer text-body-secondary">
-                    {{ publication.date }}
-                </div>
-            </div>
-        {% endfor %}
-    </div>
-{% else %}
-    <div style="height: 74vh;" class="mt-3">
-        <h1 class="text-center">Pas encore de publications</h1>
-    </div>
-{% endif %}
+
 {% endblock %}

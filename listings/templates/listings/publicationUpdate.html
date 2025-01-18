@@ -1,39 +1,48 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mb-3 pb-3">
+<div class="container">
+
     <div class="row justify-content-center align-items-center">
-        <div class="col-sm-10 col-md-8 col-lg-6">
-            <h1 class="aside-near text-center mb-3 mt-3">
-                Publication
-            </h1>
-            <div class="card card-account aside-near">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title text-center">Modifier</h5>
+      <div class="col-sm-10 col-md-8 col-lg-6">
+        <h1 class="aside-near text-center mb-3 mt-3">
+          Publication
+        </h1>    
+      </div>
+    </div>
+  
+    <div class="aside-near">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-xs-12 col-sm-10 col-md-6 col-lg-4 mb-5">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Modifier</h5> <hr>
+                        {% if publication.picture %}
+                            <img src="{{ publication.picture.url }}" class="card-img-top img-fluid w-100" alt="Image" style="height: 200px; object-fit: cover;">
+                        {% endif %}
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            
+                            <p>
+                                Message :<br>
+                                <input type="text" name="publication" class="mb-2" style="width: 100%;"> 
+                            </p>
+                            <p>
+                                Image : <br>
+                                <input type="file" name="imageUpload" accept="image/*" class="mb-2" style="width: 100%;"> 
+                            </p>
+                            <p>
+                                Privé :
+                                <input type="checkbox" name="private" class="mb-2">
+                            </p>
+                            <button type="submit" class="btn btn-primary1 mb-2" style="width: 100%;" name="modifier">Modifier</button>
+                        </form>
+                        <a href="{% url 'home' %}" class="btn btn-danger" style="width: 100%;">Retour</a>
+                    </div>
                 </div>
-                <ul class="list-group list-group-flush" style="margin-left: 5px; margin-right: 5px;">
-                    <form method="post">
-                        {% csrf_token %}
-                        <p>
-                            Message :<br>
-                            <input type="text" name="publication" class="mb-2" style="width: 100%;">
-                        </p>
-                        <p>
-                            Image : 
-                            <input type="file" name="imageUpload" class="mb-2" style="width: 100%;">
-                        </p>
-                        <p>
-                            Rendre privée la publication : &nbsp;
-                            <input type="checkbox" name="private">
-                        </p>
-                        
-                        <button type="submit" class="btn btn-primary1 mb-2" style="width: 100%;" name="login">Publier</button>
-                    </form>
-                    <a href="{% url 'home' %}" class="btn btn-danger mb-2" style="width: 100%;">Retour</a>
-                </ul>
-            </div>    
+            </div>
         </div>
     </div>
+  
 </div>
 {% endblock %}

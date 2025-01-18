@@ -1,57 +1,63 @@
 {% extends 'base.html' %}
 {% block content %}
+<div class="container pb-2">
 
-<div class="container mb-3 pb-3">
   <div class="row justify-content-center align-items-center">
     <div class="col-sm-10 col-md-8 col-lg-6">
       <h1 class="aside-near text-center mb-3 mt-3">
         Inscription
-      </h1>
-      <div class="card card-account aside-near">
-        <img src="..." class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title text-center">S'inscrire</h5>
-        </div>
-        <ul class="list-group list-group-flush" style="margin-left: 5px; margin-right: 5px;">
-            <form method="post">
-                {% csrf_token %}
-                {% if error %}
-                      <p class="text-danger">{{ error }}</p>
-                {% endif %}
-                <p>
-                    Photo de profil :
-                    <input type="file" name="profile_photo" accept="image/*" class="mb-2" style="width: 100%;">
-                </p>
-                <p>
-                    Pseudo :<br>
-                    <input type="text" name="pseudo" class="mb-2" style="width: 100%;">
-                </p>
-                <p>
-                    Prénom :<br>
-                    <input type="text" name="first_name" class="mb-2" style="width: 100%;"> 
-                </p>
-                <p>
-                    Nom :<br>
-                    <input type="text" name="last_name" class="mb-2" style="width: 100%;">
-                </p>
-                <p>
-                    Adresse mail :<br>
-                    <input type="email" placeholder="xyz@exemple.com" name="email" class="mb-2" style="width: 100%;"> 
-                </p>
-                <p>
-                    Nouveau mot de passe :
-                    <input type="password" name="password1" class="form-control" id="id_new_password1">
-                </p>
-                <!-- Champ pour la confirmation du nouveau mot de passe avec une classe spécifique -->
-                <p>Connfirmer le nouveau mot de passe : <br>
-                    <input type="password" name="password2" class="form-control" id="id_new_password2">
-                </p>
-                <button type="submit" class="btn btn-primary1 mb-2" style="width: 100%;">S’inscrire</button>
-            </form>
-            <a href="{% url 'login' %}" class="btn btn-outline-danger mb-2" style="width: 100%;">Retour</a>
-        </ul>
-      </div>    
+      </h1>    
     </div>
   </div>
+
+  <div class="aside-near">
+    <div class="row justify-content-center align-items-center">
+      <div class="col-xs-12 col-sm-10 col-md-6 col-lg-4 mb-5">
+        <div class="card">
+          <img src="/media/images/NexusNet.png" class="card-img-top img-fluid w-100" alt="NexusNet" style="height: 200px; object-fit: cover;">
+          <div class="card-body">
+            <h5 class="card-title text-center">S'inscrire</h5> <hr>
+            <form method="post">
+              {% csrf_token %}
+              {% if error %}
+                    <p class="text-danger">{{ error }}</p>
+              {% endif %}
+              <p>
+                  Photo de profil :
+                  <input type="file" name="profile_photo" accept="image/*" class="mb-2" style="width: 100%;">
+              </p>
+              <p>
+                  Pseudo :<br>
+                  <input type="text" name="pseudo" class="mb-2" style="width: 100%;">
+              </p>
+              <p>
+                  Prénom :<br>
+                  <input type="text" name="first_name" class="mb-2" style="width: 100%;"> 
+              </p>
+              <p>
+                  Nom :<br>
+                  <input type="text" name="last_name" class="mb-2" style="width: 100%;">
+              </p>
+              <p>
+                  Adresse mail :<br>
+                  <input type="email" placeholder="xyz@exemple.com" name="email" class="mb-2" style="width: 100%;"> 
+              </p>
+              <p>
+                  Nouveau mot de passe :
+                  <input type="password" name="password1" class="form-control" id="id_new_password1">
+              </p>
+              <!-- Champ pour la confirmation du nouveau mot de passe avec une classe spécifique -->
+              <p>Connfirmer le nouveau mot de passe : <br>
+                  <input type="password" name="password2" class="form-control" id="id_new_password2">
+              </p>
+              <button type="submit" class="btn btn-primary1 mb-2" style="width: 100%;">S’inscrire</button>
+            </form>
+            <a href="{% url 'login' %}" class="btn btn-outline-danger mb-2" style="width: 100%;">Retour</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 {% endblock %}

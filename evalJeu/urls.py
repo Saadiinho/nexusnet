@@ -39,11 +39,13 @@ urlpatterns = [
     #path('friends/', authentification.views.friends, name='friend'),
 
 
-    path('admin/', admin.site.urls),
     path('home/', listings.views.home, name='home'),
     path('publications/<int:id>/', listings.views.publicationDetail, name='publicationDetail'),
     path('write-publication/', listings.views.writePublication, name='writePublication'),
     path('publication-update/<int:id>/', listings.views.publicationUpdate, name='publicationUpdate'),
     path('publication-delete/<int:id>/', listings.views.publicationDelete, name='publicationDelete'),
     path('my-publications/', listings.views.myPublication, name='myPublications'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] 
+
+if settings.DEBUG:
+    urlpatterns +=  static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
