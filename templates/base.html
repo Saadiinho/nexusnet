@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!doctype html>
 <html lang="fr">
   <head>
@@ -124,4 +125,132 @@
     {% include 'footer.html' %}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
   </body>
+=======
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Si je veux utiliser Tailwind CSS <script src="https://cdn.tailwindcss.com"></script> -->
+    <link rel="shortcut icon" href="/media/images/NexusNet.ico" type="image/x-icon">
+    <title>NexusNet</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  </head>
+
+<style>
+  *{
+    margin: 0;
+    padding: 0;
+  }
+    .child {
+        z-index: 1000;
+        bottom: 0;
+        right: 0;
+        margin: 25px;
+        margin-bottom: 75px;
+        padding: 15px;
+        border-radius: 20%;
+        background-color: #216869;
+        color: #fff;
+        text-decoration: none;
+        transition: 0.2s;
+        position: fixed;
+    }
+    .child:hover, .btn-primary1:hover{
+      background-color: #fff;
+      color: #216869;
+      border: 1px solid #216869;
+    }
+    .btn-primary1{
+      background-color: #216869;
+      color: #fff;
+      border: 1px solid #216869;
+    }
+    .text-primary1{
+      color: #216869;
+      text-decoration: none;
+    }
+    .active1{
+      color: #000;
+    }
+    .Test{
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 250px; 
+      height: 100%;
+      background-color: #216869;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .link{
+      width: 100%;
+      text-align: center;
+      padding: 10px;
+      color: #fff;
+      font-size: 18px;
+      margin: 5px;
+      text-decoration: none;
+      transition: 0.25s;
+    }
+    .link:hover{
+      background-color: #174a4b;
+    }
+    .aside-near{
+      margin-left: 250px;
+    }
+    .display-lower-screen{
+      display: none;
+    }
+    @media screen and (max-width: 720px) {
+      .Test {
+        display: none;
+      }
+      .display-lower-screen{
+        display: 	block;
+      }
+      .aside-near{
+        margin-left: 0;
+      }
+    }
+    .form-group {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    .form-test{
+      border: 1px solid #000;
+      width: 100%;
+      padding-left: 10px;
+    }
+    .label-text {
+        flex: 0 0 150px; /* Ajustez la largeur du label selon vos besoins */
+        text-align: left;
+    }
+    .image-container img {
+        width: 100%;
+        height: auto;
+        clip-path: circle(50% at center);
+    }
+</style>
+  <body>
+    {% include 'header.html' %}
+    <aside class="Test">
+      <a class="link" href="{% url 'home' %}">Accueil</a>
+      <a class="link" href="{% url 'writePublication' %}">Publier</a>
+      <a class="link" href="{% url 'friend' %}">Amis</a>
+      <a class="link" href="{% url 'my-account' %}">Mon compte</a>
+    </aside>
+    {% block content %}
+    {% endblock %}
+    
+    {% include 'footer.html' %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </body>
+>>>>>>> 710d29c1cf81e76015b4297a69c10f218c08b0b3
 </html>

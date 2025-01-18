@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'base.html' %}
 
 {% block content %}
@@ -67,4 +68,75 @@
         {% endfor %}
     </div>
 </div>
+=======
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container pb-2 mb-3">
+
+    <div class="row justify-content-center align-items-center">
+      <div class="col-sm-10 col-md-8 col-lg-6">
+        <h1 class="aside-near text-center mb-3 mt-3">
+          Amis
+        </h1>    
+      </div>
+    </div>
+  
+    <div class="aside-near">
+      <div class="row justify-content-center align-items-center">
+        <div class="col-xs-12 col-sm-10 col-md-6 col-lg-4 mb-5">
+          <div class="card">
+            <img src="{{ friend.profile_photo.url }}" class="card-img-top img-fluid w-100" alt="photo de profil de l'ami" style="height: 200px; object-fit: cover;">
+            <div class="card-body">
+              <hr>
+              <p>Pseudo : {{ friend.username }}</p>
+              <p>Prénom : {{ friend.first_name }}</p>
+              <form method="POST">
+                {% csrf_token %}
+                {% if presence %}
+                    <p class="text-danger">{{ friend.username }} fait parti de vos amis.</p>
+                {% endif %}
+                
+                {% if not presence %}
+                    <button type="submit" class="btn btn-primary1" style="width: 100%;" name="add">Ajouter</button>
+                {% endif %}
+
+                {% if presence %}
+                    <button type="submit" class="btn btn-primary1" style="width: 100%;" name="delete">Supprimer</button>
+                {% endif %}
+              </form>
+              <a href="{% url 'friend' %}" class="btn btn-danger mt-3" style="width: 100%;">Retour</a> 
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </div>
+
+<div class="container mb-3 pb-3">
+    <div class="aside-near mt-3">
+        <h5 class="card-title">Ses publications</h5>
+        <hr>
+        {% for publication in publications reversed %}
+                <div class="row">
+                    <h5>{{ publication.message }}</h5>
+                    {% if publication.picture %}
+                    <div class="col-12">
+                        <img src="{{ publication.picture.url }}" alt="" class="img-fluid"> <br>
+                    </div>
+                    <div class="col-12">
+                        {{ publication.date }}
+                    </div>
+                    {% else %}
+                    <p class="card-text">
+                        {{ publication.date }}
+                    </p>
+                    {% endif %}
+                    <hr>
+                </div>
+        {% endfor %}
+    </div>
+</div>
+>>>>>>> 710d29c1cf81e76015b4297a69c10f218c08b0b3
 {% endblock %}

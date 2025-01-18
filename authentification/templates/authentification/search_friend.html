@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'base.html' %}
 
 {% block content %}
@@ -51,3 +52,58 @@
     
 </div>
 {% endblock %}
+=======
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mb-3 pb-3" style="height: 88vh;">
+    <div class="row aside-near justify-content-center align-items-center">
+        <div>
+            <h1 class="text-center mb-3 mt-3">
+                Amis
+            </h1>
+            <nav class="" style="--bs-breadcrumb-divider: ''; width: 100%;" aria-label="breadcrumb">
+                <ol class="breadcrumb justify-content-center align-items-center">
+                    <li class="breadcrumb-item"><a class="text-primary1" href="{% url 'friend' %}">Mes Amis ({{ count }})</a></li>
+                    <li class="breadcrumb-item" aria-current="page"><a class="text-primary1 active1" href="{% url 'searchFriend' %}">Rechercher des personnes</a></li>
+                    <li class="breadcrumb-item"><a class="text-primary1" href="{% url 'suggestion' %}">Suggestions</a></li>
+                </ol>
+            </nav>    
+        </div>
+    </div>
+    <div class="aside-near">
+        <form method="post">
+            {% csrf_token %}
+            <p>
+                {% if error %}
+                    <p class="text-danger">{{ error }}</p>
+                {% endif %}
+                Pseudo :<br>
+                <input type="text" name="pseudo" class="mb-2" style="width: 100%;">
+                <!-- Ajoutez le code suivant pour afficher un message d'erreur -->
+            </p>
+            <button type="submit" class="btn btn-primary1 mb-2" style="width: 100%;" name="search">Rechercher</button>
+        </form>
+    </div>
+    
+    <div class="aside-near">
+        <div class="row">
+            {% if search %}
+                {% if user != newFriend %}
+                    <div class="col-xs-12 col-sm-10 col-md-6 col-lg-4 mb-5">
+                        <div class="card">
+                        <img src="{{ newFriend.profile_photo.url }}" class="card-img-top img-fluid w-100" alt="photo de profil de l'ami" style="height: 200px; object-fit: cover;">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">{{ newFriend.username }}</h5>
+                                <a class="btn btn-primary1 mb-2" style="width: 100%;" href="{% url 'accountUser' newFriend.id %}">Voir le profil</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+    
+</div>
+{% endblock %}
+>>>>>>> 710d29c1cf81e76015b4297a69c10f218c08b0b3

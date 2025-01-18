@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'base.html' %}
 
 {% block content %}
@@ -33,4 +34,41 @@
   </div>
 
 </div>
+=======
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container pb-2">
+
+  <div class="row justify-content-center align-items-center">
+    <div class="col-sm-10 col-md-8 col-lg-6">
+      <h1 class="aside-near text-center mb-3 mt-3">
+        Mon compte
+      </h1>    
+    </div>
+  </div>
+
+  <div class="aside-near">
+    <div class="row justify-content-center align-items-center">
+      <div class="col-xs-12 col-sm-10 col-md-6 col-lg-4 mb-5">
+        <div class="card">
+          <img src="{{ user.profile_photo.url }}" class="card-img-top img-fluid w-100" alt="photo de profil de l'ami" style="height: 200px; object-fit: cover;">
+          <div class="card-body">
+            <h5 class="card-title text-center">Bonjour et bienvenue {{ user.first_name }}</h5> <hr>
+            <a href="{% url 'informations' %}" class="btn btn-primary1 mb-3" style="width: 100%;">Voir mes informations</a>
+            <a class="btn btn-primary1 mb-3" style="width: 100%;" href="{% url 'update' %}">Modifier mes informations</a>
+            <a href="{% url 'change_password' %}" class="btn btn-primary1 mb-3" style="width: 100%;">Modifier mon mot de passe</a>
+            {% if user.id == 2 %}
+            <a href="{% url 'admin:index' %}" class="btn btn-primary mb-3" style="width: 100%;">Mode administrateur</a>
+            {% endif %}
+            <a href="{% url 'logout' %}" class="btn btn-danger mb-3" style="width: 100%;">Me déconnecter</a>
+            <a href="{% url 'delete' %}" class="btn btn-danger mb-3" style="width: 100%;">Supprimer mon compte</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+>>>>>>> 710d29c1cf81e76015b4297a69c10f218c08b0b3
 {% endblock %}

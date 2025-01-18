@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'base.html' %}
 
 {% block content %}
@@ -43,4 +44,51 @@
         </div>
     </div>
 </div>
+=======
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mb-3 pb-3">
+    <div class="row aside-near justify-content-center align-items-center">
+        <div>
+            <h1 class="text-center mt-3 mb-3">
+            Amis
+            </h1>
+            <nav class="" style="--bs-breadcrumb-divider: ''; width: 100%;" aria-label="breadcrumb" >
+                <ol class="breadcrumb justify-content-center align-items-center">
+                    <li class="breadcrumb-item"><a class="text-primary1" href="{% url 'friend' %}">Mes Amis ({{ count }})</a></li>
+                    <li class="breadcrumb-item"><a class="text-primary1" href="{% url 'searchFriend' %}">Rechercher des personnes</a></li>
+                    <li class="breadcrumb-item" aria-current="page"><a class="text-primary1 active1" href="{% url 'suggestion' %}">Suggestions</a></li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <div class="aside-near">
+        <div class="row">
+            {% for friend in friends %}
+                {% if friend.user == user or friend.friend == user %}
+                    <div class="col-xs-12 col-sm-10 col-md-6 col-lg-4 mb-5">
+                        <div class="card">
+                            {% if friend.user == user %}
+                                <img src="{{ friend.friend.profile_photo.url }}" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title text-center">{{ friend.friend.username }}</h5>
+                                    <a class="btn btn-primary1 mb-2" style="width: 100%;" href="{% url 'accountUser' friend.friend.id %}">Voir le profil</a>
+                                </div>
+                            {% endif%}
+                            {% if friend.friend == user %}
+                                <img src="{{ friend.user.profile_photo.url }}" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title text-center">{{ friend.user.username }}</h5>
+                                    <a class="btn btn-primary1 mb-2" style="width: 100%;" href="{% url 'accountUser' friend.user.id %}">Voir le profil</a>
+                                </div>
+                            {% endif%}
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+>>>>>>> 710d29c1cf81e76015b4297a69c10f218c08b0b3
 {% endblock %}

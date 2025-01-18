@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'base.html' %}
 {% block content %}
 <div class="container">
@@ -50,4 +51,50 @@
     Publier
 </a>
 
+=======
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+
+    <div class="row justify-content-center align-items-center">
+      <div class="col-sm-10 col-md-8 col-lg-6">
+        <h1 class="text-center mb-3 mt-3">
+          Fil d'actualité
+        </h1>    
+      </div>
+    </div>
+    {% if present %}
+        <div class="container-fluid d-flex justify-content-center align-items-center">
+            <div class="row justify-content-center align-items-center" style="width: 50%;">
+                {% for publication in publications reversed %}
+                <div class="col-xs-12 col-sm-10 col-md-6 col-lg-12 mb-5">
+                    <div class="card">
+                        <div class="card-header fs-4">  
+                            <img src="{{ publication.author.profile_photo.url }}" alt="Photo de profil" width="32" height="32" class="rounded-circle border border-white">
+                            <strong>
+                                <a href="" class="text-primary1">{{ publication.author.username }}</a>
+                            </strong>
+                        </div>
+                        {% if publication.picture %}
+                            <img src="{{ publication.picture.url }}" class="card-img-top img-fluid w-100" alt="photo de profil de l'ami" style="height: 200px; object-fit: cover;">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5>
+                                {{ publication.message }}
+                            </h5>
+                            {{ publication.date }}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+<a class="child" href="{% url 'writePublication' %}">
+    Publier
+</a>
+
+>>>>>>> 710d29c1cf81e76015b4297a69c10f218c08b0b3
 {% endblock %}
